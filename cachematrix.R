@@ -7,19 +7,19 @@
 ## the inverse and the matrix, similar to OOP.
 
 makeCacheMatrix <- function(x = matrix()) {
-        inverse <- NULL
-        setMatrix <- function(y) {
-                x <<- y
-                inverse <<- NULL
+        inverse <- NULL #initializes inverse to nothing
+        setMatrix <- function(y) { # initializes matrix object
+                x <<- y # caches matrix
+                inverse <<- NULL # sets inverse to NULL
         }
         
-        getMatrix <- function() { x }
+        getMatrix <- function() { x } #returns the matrix
         
-        setInv <- function(solve) {
+        setInv <- function(solve) { #calculates the inverse
                 inverse <<- solve
         }
         
-        getInv <- function() { inverse }
+        getInv <- function() { inverse } #returns the inverse
         
         list(setMatrix = setMatrix, getMatrix = getMatrix, 
                         setInv = setInv, getInv = getInv)
@@ -34,12 +34,16 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
         inverse <- x$getInv()
+        
+        ## Accesses the cache, if there is something there
         if(!is.null(inverse)) {
                 message("getting cached data")
+                ## Returns cached data
                 return(inverse)
         }
-        data <- x$getMatrix()
-        inverse <- solve(data, ...)
-        x$setInv(inverse)
-        inverse
+        
+        data <- x$getMatrix() #Gets the matrix
+        inverse <- solve(data, ...) # Calculates the inverse
+        x$setInv(inverse) # "sets" the inverse
+        inverse #Returns the inverse
 }
